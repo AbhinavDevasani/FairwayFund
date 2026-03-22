@@ -130,7 +130,7 @@ const Admin = () => {
                     </td>
                     <td className="px-6 py-4">
                       {w.proofImage ? (
-                        <a href={`http://localhost:8000${w.proofImage}`} target="_blank" rel="noreferrer" className="text-brand-accent hover:underline font-medium text-xs">
+                        <a href={`https://fairwayfund.onrender.com${w.proofImage}`} target="_blank" rel="noreferrer" className="text-brand-accent hover:underline font-medium text-xs">
                           View Image
                         </a>
                       ) : (
