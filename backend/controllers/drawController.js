@@ -25,7 +25,7 @@ const getUsersWithScores = async () => {
 
 export const simulateDraw = async (req, res) => {
   try {
-    const winningNumbers = [10, 20, 30, 40, 45];
+    const winningNumbers = generateWinningNumbers();
     const usersWithScores = await getUsersWithScores();
     const winners = findWinners(usersWithScores, winningNumbers);
 
@@ -58,7 +58,7 @@ export const runDraw = async (req, res) => {
     const lastDraw = await Draw.findOne({ isPublished: true }).sort({ createdAt: -1 });
     const jackpotCarryForward = lastDraw ? lastDraw.jackpotCarryForward : 0;
 
-    const winningNumbers = [10, 20, 30, 40, 45];
+    const winningNumbers = generateWinningNumbers();
     const prizePool = await calculatePrizePool(jackpotCarryForward);
 
     const usersWithScores = await getUsersWithScores();
