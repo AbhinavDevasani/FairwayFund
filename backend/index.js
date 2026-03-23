@@ -37,15 +37,36 @@ app.use("/api/admin", adminRoutes);
 const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
 
+// Connection event handlers
+mongoose.connection.on("connected", () => {
+  console.log("✓ Server connected to mongo db");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("✗ DB connection error:", err);
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠ DB disconnected");
+});
+
 mongoose
-  .connect(uri)
+  .connect(uri, {
+    maxPoolSize: 10,
+    minPoolSize: 2,
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+    family: 4,
+    connectTimeoutMS: 10000,
+    retryWrites: true,
+    retryReads: true,
+  })
   .then(() => {
-    console.log("Server connected to mongo db");
+    app.listen(port, () => {
+      console.log(`✓ Server connected at port ${port}`);
+    });
   })
   .catch((err) => {
-    console.log("DB connection failure", err);
+    console.error("✗ DB connection failed", err.message);
+    process.exit(1);
   });
-
-app.listen(port, () => {
-  console.log(`Server connected at port ${port}`);
-});
