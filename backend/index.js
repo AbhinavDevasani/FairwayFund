@@ -52,21 +52,24 @@ mongoose.connection.on("disconnected", () => {
 
 mongoose
   .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
     maxPoolSize: 10,
     minPoolSize: 2,
-    serverSelectionTimeoutMS: 10000,
-    socketTimeoutMS: 45000,
+    serverSelectionTimeoutMS: 30000,
+    socketTimeoutMS: 60000,
     family: 4,
-    connectTimeoutMS: 10000,
+    connectTimeoutMS: 30000,
     retryWrites: true,
     retryReads: true,
+    maxIdleTimeMS: 30000,
   })
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server connected at port ${port}`);
+      console.log(`✓ Server connected at port ${port}`);
     });
   })
   .catch((err) => {
-    console.error("DB connection failed", err.message);
+    console.error("✗ DB connection failed:", err.message);
     process.exit(1);
   });
