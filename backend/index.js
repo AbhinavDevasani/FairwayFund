@@ -63,10 +63,10 @@ mongoose
   })
   .then(() => {
     app.listen(port, () => {
-      console.log(`✓ Server connected at port ${port}`);
+      console.log(`Server connected at port ${port}`);
     });
   })
   .catch((err) => {
-    console.error("✗ DB connection failed", err.message);
+    console.error("DB connection failed", err.message);
     process.exit(1);
   });
